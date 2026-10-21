@@ -1,0 +1,13 @@
+{
+  "name": "github-issue-analyzer",
+  "version": "0.0.0",
+  "description": "\"GitHub auto issue analyzer and also responds with the solution to make a pull request\"",
+  "license": "MIT",
+  "author": "DevYay",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  }
+}
