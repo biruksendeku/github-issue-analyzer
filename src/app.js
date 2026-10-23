@@ -1,8 +1,20 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-const app = express();
+import { createBullBoard } from "@bull-board/api";
+import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
+import { ExpressAdapter } from "@bull-board/express";
+import fetchReposQueue from "./queues/fetchRepos.js";
 import reposRouter from "./routers/repos.js";
+
+const app = express();
+
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath("/admin/queues");
+createBullBoard({
+  queues: [new BullMQAdapter(fetchReposQueue)],
+  serverAdapter: serverAdapter,
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,5 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 app.use("/", reposRouter);
+app.use("/admin/queues", serverAdapter.getRouter());
 
 export default app;
