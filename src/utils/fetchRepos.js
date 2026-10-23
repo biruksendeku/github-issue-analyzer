@@ -15,7 +15,6 @@ const fetchRepos = async (username) => {
       },
     },
   );
-  console.log("GitHub API response status:", res.status);
   if (!res.ok) {
     throw new Error(`GitHUb API error: ${res.status} ${res.statusText}`);
   }
