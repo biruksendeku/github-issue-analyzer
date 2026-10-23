@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
+const { GITHUB_TOKEN } = process.env;
 
-// console.log("All environment variables:", process.env);
-if (!process.env.GITHUB_TOKEN) {
+if (!GITHUB_TOKEN) {
   throw new Error("GITHUB_TOKEN is not set");
 }
 
@@ -11,7 +11,7 @@ const fetchRepos = async (username) => {
     {
       headers: {
         "User-Agent": `${username}-demo`,
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
       },
     },
   );
