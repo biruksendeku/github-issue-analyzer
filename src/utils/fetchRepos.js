@@ -1,9 +1,19 @@
 import fetch from "node-fetch";
 
+// console.log("All environment variables:", process.env);
+if (!process.env.GITHUB_TOKEN) {
+  throw new Error("GITHUB_TOKEN is not set");
+}
+
 const fetchRepos = async (username) => {
   const res = await fetch(
     `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=1`,
-    { headers: { "User-Agent": `${username}-demo` } },
+    {
+      headers: {
+        "User-Agent": `${username}-demo`,
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+    },
   );
   console.log("GitHub API response status:", res.status);
   if (!res.ok) {
