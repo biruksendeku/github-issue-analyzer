@@ -1,3 +1,3 @@
-exports.getRepos = (req, res) => {
+export const getRepos = (req, res) => {
   res.render("index");
 };

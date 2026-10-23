@@ -1,9 +1,10 @@
-const { fetchRepos } = require("../utils/fetchRepos");
+import { fetchRepos } from "../utils/fetchRepos.js";
 
-exports.postRepos = async (req, res) => {
+export const postRepos = async (req, res) => {
   const { username } = req.body;
   const latestRepo = await fetchRepos(username);
-  // return latestRepo;
+  console.log(username);
+  console.log(latestRepo);
   res.render("repoResult", {
     username,
     latestRepo,

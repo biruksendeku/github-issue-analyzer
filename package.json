@@ -4,7 +4,7 @@
   "description": "\"GitHub auto issue analyzer and also responds with the solution to make a pull request\"",
   "license": "MIT",
   "author": "DevYay",
-  "type": "commonjs",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
@@ -14,6 +14,7 @@
     "dotenv": "^18.0.8",
     "ejs": "^7.0.2",
     "express": "^5.3.0",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.14"
   }
 }

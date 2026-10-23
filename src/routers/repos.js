@@ -1,8 +1,9 @@
-const router = require("express").Router();
-const { getRepos } = require("../controller/getRepos");
-const { postRepos } = require("../controller/postRepos");
+import express from "express";
+const router = express.Router();
+import { getRepos } from "../controller/getRepos.js";
+import { postRepos } from "../controller/postRepos.js";
 
 router.use("/", getRepos);
 router.post("/repo", postRepos);
 
-module.exports = router;
+export default router;
