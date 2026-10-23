@@ -4,6 +4,8 @@
 
 import "dotenv/config";
 import app from "./src/app.js";
+import worker from "./src/workers/fetchRepos.js";
+
 const { PORT } = process.env;
 
 app.listen(PORT, () => {
