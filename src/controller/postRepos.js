@@ -1,6 +1,6 @@
-import { fetchRepos } from "../utils/fetchRepos.js";
+import fetchRepos from "../utils/fetchRepos.js";
 
-export const postRepos = async (req, res) => {
+const postRepos = async (req, res) => {
   const { username } = req.body;
   const latestRepo = await fetchRepos(username);
   console.log(username);
@@ -10,3 +10,5 @@ export const postRepos = async (req, res) => {
     latestRepo,
   });
 };
+
+export default postRepos;

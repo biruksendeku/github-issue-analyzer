@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-export const fetchRepos = async (username) => {
+const fetchRepos = async (username) => {
   console.log("Fetching repos for", username);
   const res = await fetch(
     `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=1`,
@@ -15,3 +15,5 @@ export const fetchRepos = async (username) => {
   console.log("Latest repo for", username, ":", latest);
   return latest;
 };
+
+export default fetchRepos;

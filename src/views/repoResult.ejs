@@ -7,6 +7,12 @@
   </head>
   <body>
     <h1>Repo Result For <%= username %></h1>
-    <p><%= latestRepo %></p>
+    <% if (latestRepo) { %>
+      <p>
+        <a href="<%= latestRepo.html_url %>"><%= latestRepo.name %></a>
+      </p>
+    <% } else { %>
+      <p>No public repositories found.</p>
+    <% } %>
   </body>
 </html>
