@@ -1,5 +1,7 @@
-import addUsername from "../utils/addUsername.js";
-export async function addUsername(req, res) {
+import addUsernameData from "../utils/addUsername.js";
+const addUsername = async (req, res) => {
   const { username } = req.body;
-  await addUsername(req.user._id, username);
-}
+  await addUsernameData(req.user._id, username);
+};
+
+export default addUsername;
