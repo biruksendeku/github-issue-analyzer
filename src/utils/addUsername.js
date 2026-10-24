@@ -6,12 +6,13 @@ import fetchLatestRepo from "./fetchLatestRepo.js";
 const addUsername = async (id, username) => {
   // find the latest repo
   const latestRepo = await fetchLatestRepo(username);
+  console.log("Latest repo full_name: ", latestRepo.full_name);
   const newResult = new Result({
     user: id,
-    latestRepo,
+    latestRepo: latestRepo.full_name,
   });
   await newResult.save();
-  // const newUser = await User.repoUsernames.push({ username });
+
   await User.findById(
     id, // user identifier ID, passed to the saveUsername function in the controller
     {
