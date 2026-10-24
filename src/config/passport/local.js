@@ -1,8 +1,7 @@
 import localPassport from "passport-local";
 import User from "../../models/user";
-import bcrypt from "bcryptjs";
+import { comparePassword } from "../../utils/authHelper.js";
 import { BadRequestError } from "../../middleware/errors/custom.js";
-import { userOAuthProvider } from "@anthropic-ai/sdk/lib/credentials/user-oauth.js";
 
 const LocalStrategy = localPassport.Strategy;
 
@@ -30,7 +29,7 @@ const passportLocal = (passport) => {
             );
             // return done(null, false);
           }
-          const isValid = await bcrypt.compare(password, client.password);
+          const isValid = await comparePassword(password, client.password);
           if (!isValid) {
             throw new BadRequestError("Invalid email or password");
           }

@@ -18,8 +18,4 @@ class BadRequestError extends AppError {
   }
 }
 
-export default {
-  AppError,
-  NotFoundError,
-  BadRequestError,
-};
+export { AppError, NotFoundError, BadRequestError };
