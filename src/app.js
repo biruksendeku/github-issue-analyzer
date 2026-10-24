@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createBullBoard } from "@bull-board/api";
@@ -7,8 +8,19 @@ import { ExpressAdapter } from "@bull-board/express";
 import fetchReposQueue from "./queues/fetchRepos.js";
 import reposRouter from "./routers/repos.js";
 import authRoutes from "./routers/authentication.js";
+import sessionMiddleware from "./middleware/session.js";
+
+import passportLocal from "./config/passport/local.js";
+import passportGoogle from "./config/passport/google.js";
 
 const app = express();
+
+app.use(sessionMiddleware);
+
+passportLocal(passport);
+passportGoogle(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath("/admin/queues");

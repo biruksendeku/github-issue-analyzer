@@ -1,5 +1,5 @@
 import localPassport from "passport-local";
-import User from "../../models/user";
+import User from "../../models/user.js";
 import { comparePassword } from "../../utils/authHelper.js";
 import { BadRequestError } from "../../middleware/errors/custom.js";
 

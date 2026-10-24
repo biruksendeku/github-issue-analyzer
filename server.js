@@ -1,23 +1,46 @@
-// import dotenv from "dotenv";
-// dotenv.config();
-// import app from "./src/app.js";
-
 import "dotenv/config";
-import app from "./src/app.js";
+
+import { createServer } from "http";
+import mongoose from "mongoose";
+const { formatName } = require("./src/utils/formatName.js");
+const { PORT, NODE_ENV, MONGODB_URI } = process.env;
 import worker from "./src/workers/fetchLatestRepo.js";
-import Result from "./src/models/result.js";
-import User from "./src/models/user.js";
+import appFile from "./src/app.js";
 
-const { PORT } = process.env;
+// server starter function
+const start = async () => {
+  try {
+    // Connect to MongoDB
+    await mongoose.connect(MONGODB_URI);
+    console.log("MongoDB connected successfully");
 
-Result.find()
-  .then((data) => console.log("Result: ", data))
-  .catch((err) => console.error("Error fetching Result data: ", err.messaege));
+    // waiting for mongoose connection for app level uses
+    const app = appFile;
+    const server = createServer(app);
 
-User.find()
-  .then((data) => console.log("User: ", data))
-  .catch((err) => console.error("Error fetching User data: ", err.messaege));
+    // signal handlers
+    process.on("SIGINT", () => shutdown("SIGINT", server));
+    process.on("SIGTERM", () => shutdown("SIGTERM", server));
+    process.on("uncaughtException", (err) => {
+      console.error("Uncaught Exception:", err);
+      shutdown("UNCAUGHT_EXCEPTION", server);
+    });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}...`);
-});
+    // Start the server ONLY after DB is connected
+    server.listen(PORT, () => {
+      const nodeEnv = formatName(NODE_ENV);
+      console.log(`${nodeEnv} server started on port ${PORT}...`);
+    });
+
+    // scripts for logging and deletion
+    // require('./src/scripts/log-all');
+    // require('./src/scripts/delete-scripts');
+  } catch (err) {
+    console.error("Failed to start server:", err.message);
+    console.error(err.stack);
+    process.exit(1);
+  }
+};
+
+// Run the start function
+start();
