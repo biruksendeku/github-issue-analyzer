@@ -5,7 +5,7 @@ if (!GITHUB_TOKEN) {
   throw new Error("GITHUB_TOKEN is not set");
 }
 
-const fetchRepos = async (username) => {
+const fetchLatestRepos = async (username) => {
   const res = await fetch(
     `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=1`,
     {
@@ -23,4 +23,4 @@ const fetchRepos = async (username) => {
   return latestRepo;
 };
 
-export default fetchRepos;
+export default fetchLatestRepos;

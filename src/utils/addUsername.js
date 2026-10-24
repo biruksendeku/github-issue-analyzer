@@ -1,13 +1,13 @@
 import User from "../models/user.js";
 import Result from "../models/result.js";
-import fetchLatestRepo from "../utils/fetchLatestRepo.js";
+import fetchLatestRepo from "./fetchLatestRepo.js";
 
 // save the username input and record last repo here
-const saveUsername = async (id, username) => {
+const addUsername = async (id, username) => {
   // find the latest repo
   const latestRepo = await fetchLatestRepo(username);
   const newResult = new Result({
-    user: userId,
+    user: id,
     latestRepo,
   });
   await newResult.save();
@@ -25,4 +25,4 @@ const saveUsername = async (id, username) => {
   );
 };
 
-export default saveUsername;
+export default addUsername;
