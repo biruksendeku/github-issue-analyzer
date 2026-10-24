@@ -19,8 +19,8 @@ const fetchRepos = async (username) => {
     throw new Error(`GitHUb API error: ${res.status} ${res.statusText}`);
   }
   const repos = await res.json();
-  const latest = repos[0];
-  return latest;
+  const latestRepo = repos[0];
+  return latestRepo;
 };
 
 export default fetchRepos;

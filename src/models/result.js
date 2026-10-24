@@ -6,7 +6,7 @@ const resultSchema = new Schema({
     ref: "User",
     required: [true, "Reference user is required"],
   },
-  latestRepoName: { type: String, trim: true },
+  latestRepo: { type: String, trim: true },
 });
 
 export default mongoose.model("Result", resultSchema);

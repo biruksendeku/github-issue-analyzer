@@ -1,5 +1,5 @@
 import { Worker } from "bullmq";
-import fetchRepos from "../utils/fetchRepos.js";
+import fetchLatestRepo from "../utils/fetchLatestRepo.js";
 import connection from "../config/redis.js";
 
 const worker = new Worker(
@@ -7,7 +7,7 @@ const worker = new Worker(
   async (job) => {
     const { username } = job.data;
     try {
-      const latestRepo = await fetchRepos(username);
+      const latestRepo = await fetchLatestRepo(username);
       return latestRepo;
     } catch (error) {
       console.error("Error fetching repositories:", error);

@@ -3,7 +3,13 @@ import mongoose, { Schema } from "mongoose";
 const userSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
-    repoUsernames: { type: [String], trim: true },
+    repoUsernames: [
+      {
+        username: { type: String, trim: true, lowercase: true },
+        addedAt: { type: Date, default: Date.now },
+        _id: false,
+      },
+    ],
     email: {
       type: String,
       required: true,
@@ -39,4 +45,4 @@ userSchema.set("toJSON", {
   },
 });
 
-export default mongoose.model("Result", userSchema);
+export default mongoose.model("User", userSchema);

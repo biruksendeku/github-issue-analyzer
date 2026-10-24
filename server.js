@@ -4,7 +4,7 @@
 
 import "dotenv/config";
 import app from "./src/app.js";
-import worker from "./src/workers/fetchRepos.js";
+import worker from "./src/workers/fetchLatestRepo.js";
 
 const { PORT } = process.env;
 
