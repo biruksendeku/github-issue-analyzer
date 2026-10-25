@@ -5,7 +5,14 @@ const addUsernameGet = (req, res) => {
 };
 const addUsername = async (req, res) => {
   const { username } = req.body;
-  await addUsernameData(req.user._id, username);
+  const { newResult, updatedUser } = await addUsernameData(
+    req.user._id,
+    username,
+  );
+  res.status(201).json({
+    newResult,
+    updatedUser,
+  });
 };
 
 export { addUsernameGet, addUsername };
