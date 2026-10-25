@@ -8,6 +8,7 @@ import { ExpressAdapter } from "@bull-board/express";
 import fetchReposQueue from "./queues/fetchRepos.js";
 import reposRouter from "./routers/repos.js";
 import sessionMiddleware from "./middleware/session.js";
+import errorHandler from "./middleware/errors/handler.js";
 
 import creareAccountRouter from "./routers/createAccount.js";
 import localAuthRoutes from "./routers/localAuth.js";
@@ -54,5 +55,18 @@ app.use("/auth", localAuthRoutes);
 app.use("/auth", googleAuthRoutes);
 app.use("/", reposRouter);
 app.use("/admin/queues", serverAdapter.getRouter());
+
+// 404 handler middleware
+app.use((req, res) => {
+  if (req.accepts("html")) {
+    return res.status(404).render("errors/404");
+  }
+  res.status(404).json({
+    success: false,
+    message: "Page Not Found",
+  });
+});
+// the overall error-handler
+app.use(errorHandler);
 
 export default app;

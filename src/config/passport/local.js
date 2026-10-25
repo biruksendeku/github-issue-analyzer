@@ -25,7 +25,7 @@ const passportLocal = (passport) => {
             let lastProvider = user.authProvider[user.authProvider.length - 1];
             lastProvider = lastProvider.toUpperCase();
             throw new BadRequestError(
-              `This account uses ${lastProvider}. Please log in with that method.`,
+              `This account uses ${lastProvider} as Auth Provider. Please log in with that method.`,
             );
             // return done(null, false);
           }
