@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import User from "../models/user.js";
-import { formatName, getFirstName } from "../utils/formatName.js";
+import { formatName } from "../utils/formatName.js";
 import { hashPassword } from "../utils/authHelper.js";
 import promisify from "../utils/promisify.js";
 import { BadRequestError } from "../middleware/errors/custom.js";
@@ -19,7 +19,7 @@ const createAccount = async (req, res) => {
     throw new BadRequestError("Passwords do not match");
   }
   const user = await User.findOne({ email }).select("+password");
-  // existing client with local auth
+  // existing user with local auth
   if (user && user.authProvider.includes("local")) {
     throw new BadRequestError("Account already exists. Please log in.");
   }
@@ -29,7 +29,7 @@ const createAccount = async (req, res) => {
     user.password = hash;
     user.authProvider.push("local");
     await user.save();
-    await promisify((cb) => req.login(client, cb));
+    await promisify((cb) => req.login(user, cb));
     return res.redirect("/");
   }
   // new user
@@ -49,9 +49,6 @@ const createAccount = async (req, res) => {
   await newUser.save();
   // log them in immediately
   await promisify((cb) => req.login(newUser, cb));
-  // queue verification email
-  const job = await addVerificationMail(email, firstName, verificationToken);
-  await m2cDbCreationJob(job);
   // some response
   req.flash("success", "Account created! Check your email to verify.");
   res.redirect("back");

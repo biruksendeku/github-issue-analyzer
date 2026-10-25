@@ -25,15 +25,15 @@ async function runAll() {
 }
 runAll();
 
-async function sessionLog() {
-  try {
-    const data = await mongoose.connection
-      .collection("sessions")
-      .find({})
-      .toArray();
-    console.log("Sessions: ", data);
-  } catch (err) {
-    console.error("Sessions fetch failed: ", err);
-  }
-}
-sessionLog();
+// async function sessionLog() {
+//   try {
+//     const data = await mongoose.connection
+//       .collection("sessions")
+//       .find({})
+//       .toArray();
+//     console.log("Sessions: ", data);
+//   } catch (err) {
+//     console.error("Sessions fetch failed: ", err);
+//   }
+// }
+// sessionLog();

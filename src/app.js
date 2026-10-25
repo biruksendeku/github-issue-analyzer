@@ -7,8 +7,11 @@ import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 import { ExpressAdapter } from "@bull-board/express";
 import fetchReposQueue from "./queues/fetchRepos.js";
 import reposRouter from "./routers/repos.js";
-import authRoutes from "./routers/authentication.js";
 import sessionMiddleware from "./middleware/session.js";
+
+import creareAccountRouter from "./routers/createAccount.js";
+import localAuthRoutes from "./routers/localAuth.js";
+import googleAuthRoutes from "./routers/googleAuth.js";
 
 import passportLocal from "./config/passport/local.js";
 import passportGoogle from "./config/passport/google.js";
@@ -38,11 +41,17 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "..", "src", "views"));
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+    timestamp: Date.now(),
+  });
 });
-app.use("/auth", authRoutes);
+
+app.use("/auth", creareAccountRouter);
+app.use("/auth", localAuthRoutes);
+app.use("/auth", googleAuthRoutes);
 app.use("/", reposRouter);
 app.use("/admin/queues", serverAdapter.getRouter());
 
