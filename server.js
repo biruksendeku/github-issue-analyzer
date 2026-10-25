@@ -3,7 +3,7 @@ import "dotenv/config";
 import { createServer } from "http";
 import { formatName } from "./src/utils/formatName.js";
 const { PORT, NODE_ENV } = process.env;
-// import worker from "./src/workers/fetchLatestRepo.js";
+import worker from "./src/workers/fetchLatestRepo.js";
 import appFile from "./src/app.js";
 
 import "./src/scripts/loadAllData.js";
