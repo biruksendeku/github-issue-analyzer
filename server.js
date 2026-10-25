@@ -7,6 +7,7 @@ const { PORT, NODE_ENV } = process.env;
 import appFile from "./src/app.js";
 
 import "./src/scripts/loadAllData.js";
+// import "./src/scripts/deletion.js";
 
 // server starter function
 const start = async () => {
