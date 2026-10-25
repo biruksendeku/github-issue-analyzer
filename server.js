@@ -1,30 +1,26 @@
 import "dotenv/config";
 
 import { createServer } from "http";
-import mongoose from "mongoose";
-const { formatName } = require("./src/utils/formatName.js");
-const { PORT, NODE_ENV, MONGODB_URI } = process.env;
-import worker from "./src/workers/fetchLatestRepo.js";
+import { formatName } from "./src/utils/formatName.js";
+const { PORT, NODE_ENV } = process.env;
+// import worker from "./src/workers/fetchLatestRepo.js";
 import appFile from "./src/app.js";
+
+import "./src/scripts/loadAllData.js";
 
 // server starter function
 const start = async () => {
   try {
-    // Connect to MongoDB
-    await mongoose.connect(MONGODB_URI);
-    console.log("MongoDB connected successfully");
-
-    // waiting for mongoose connection for app level uses
     const app = appFile;
     const server = createServer(app);
 
     // signal handlers
-    process.on("SIGINT", () => shutdown("SIGINT", server));
-    process.on("SIGTERM", () => shutdown("SIGTERM", server));
-    process.on("uncaughtException", (err) => {
-      console.error("Uncaught Exception:", err);
-      shutdown("UNCAUGHT_EXCEPTION", server);
-    });
+    // process.on("SIGINT", () => shutdown("SIGINT", server));
+    // process.on("SIGTERM", () => shutdown("SIGTERM", server));
+    // process.on("uncaughtException", (err) => {
+    //   console.error("Uncaught Exception:", err);
+    //   shutdown("UNCAUGHT_EXCEPTION", server);
+    // });
 
     // Start the server ONLY after DB is connected
     server.listen(PORT, () => {

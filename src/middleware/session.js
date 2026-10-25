@@ -1,7 +1,9 @@
 import session from "express-session";
-import mongoose from "mongoose";
 import { MongoStore } from "connect-mongo";
-const { SESSION_SECRET_KEY, NODE_ENV } = process.env;
+const { SESSION_SECRET_KEY, NODE_ENV, MONGODB_URI } = process.env;
+
+import connectDb from "../utils/connectDb.js";
+const mongoClient = await connectDb();
 
 const sessionMiddleware = session({
   secret: SESSION_SECRET_KEY,
@@ -9,7 +11,9 @@ const sessionMiddleware = session({
   saveUninitialized: false,
 
   store: new MongoStore({
-    client: mongoose.connection.getClient(),
+    client: mongoClient,
+    // client: await mongoose.connect(MONGODB_URI),
+    // console.log("MongoDB connected successfully");
     collection: "sessions",
     ttl: 7 * 24 * 60 * 60, // 7days in seconds
     autoRemove: "interval",

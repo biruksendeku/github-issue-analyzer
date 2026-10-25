@@ -1,4 +1,4 @@
-const GoogleStrategy = require("passport-google-oauth20");
+import GoogleStrategy from "passport-google-oauth20";
 import User from "../../models/user.js";
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } =
   process.env;
