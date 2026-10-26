@@ -4,7 +4,7 @@ import { createServer } from "http";
 import { formatName } from "./src/utils/formatName.js";
 const { PORT, NODE_ENV } = process.env;
 
-// import "./src/scripts/loadAllData.js";
+import "./src/scripts/loadAllData.js";
 // import "./src/scripts/deletion.js";
 
 import app from "./src/app.js";
