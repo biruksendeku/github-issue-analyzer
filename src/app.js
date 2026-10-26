@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { createBullBoard } from "@bull-board/api";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 import { ExpressAdapter } from "@bull-board/express";
+
 import fetchReposQueue from "./queues/fetchRepos.js";
 import reposRouter from "./routers/repos.js";
 import sessionMiddleware from "./middleware/session.js";
@@ -18,9 +19,7 @@ import passportLocal from "./config/passport/local.js";
 import passportGoogle from "./config/passport/google.js";
 
 const app = express();
-
 app.use(sessionMiddleware);
-
 passportLocal(passport);
 passportGoogle(passport);
 app.use(passport.initialize());
@@ -66,6 +65,7 @@ app.use((req, res) => {
     message: "Page Not Found",
   });
 });
+
 // the overall error-handler
 app.use(errorHandler);
 
