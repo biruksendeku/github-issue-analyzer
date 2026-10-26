@@ -3,12 +3,20 @@ import "dotenv/config";
 import { createServer } from "http";
 import { formatName } from "./src/utils/formatName.js";
 const { PORT, NODE_ENV } = process.env;
-import worker from "./src/workers/fetchLatestRepo.js";
-import appFile from "./src/app.js";
 
-import "./src/scripts/loadAllData.js";
+// import "./src/scripts/loadAllData.js";
 // import "./src/scripts/deletion.js";
 
+import app from "./src/app.js";
+import "./src/workers/fetchLatestRepo.js";
+const server = createServer(app);
+
+server.listen(PORT, () => {
+  const nodeEnv = formatName(NODE_ENV);
+  console.log(`${nodeEnv} server started on port ${PORT}...`);
+});
+
+/*
 // server starter function
 const start = async () => {
   try {
@@ -41,3 +49,4 @@ const start = async () => {
 
 // Run the start function
 start();
+*/
