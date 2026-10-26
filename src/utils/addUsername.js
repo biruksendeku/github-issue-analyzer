@@ -20,7 +20,7 @@ const addUsername = async (id, username) => {
 
       updatedUser = await User.findByIdAndUpdate(
         id,
-        { $push: { repoUsernames: { username } } },
+        { $addToSet: { repoUsernames: { username } } },
         { new: true, runValidators: true, session },
       );
 
