@@ -4,11 +4,7 @@ import { createServer } from "http";
 import { formatName } from "./src/utils/formatName.js";
 const { PORT, NODE_ENV } = process.env;
 
-import "./src/scripts/loadAllData.js";
-// import "./src/scripts/deletion.js";
-
 import app from "./src/app.js";
-import "./src/workers/fetchLatestRepo.js";
 const server = createServer(app);
 
 server.listen(PORT, () => {

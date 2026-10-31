@@ -8,7 +8,10 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "fetch-repo": "node ./src/workers/fetchLatestRepo.js",
+    "fetch-data": "node ./src/scripts/loadAllData.js",
+    "delete-data": "node ./src/scripts/deletion.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.2.0",
