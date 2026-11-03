@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repo Issue Result</title>
+  </head>
+  <body>
+    <h1>Repo Issue Result For <%= username %>/<%= repo %></h1>
+    <% if (latestIssue) { %>
+      <p>
+        <a href="<%= latestIssue.html_url %>"><%= latestIssue.name %></a>
+      </p>
+    <% } else { %>
+      <p>No public repository issues found.</p>
+    <% } %>
+  </body>
+</html>

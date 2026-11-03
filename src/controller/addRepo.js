@@ -3,7 +3,7 @@ import addRepoData from "../utils/addRepo.js";
 const addRepoGet = (req, res) => {
   res.render("addRepo");
 };
-const addUsername = async (req, res) => {
+const addRepo = async (req, res) => {
   const { username, repo } = req.body;
   const { newResult, updatedUser } = await addRepoData(
     req.user._id,
