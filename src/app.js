@@ -6,7 +6,7 @@ import { createBullBoard } from "@bull-board/api";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 import { ExpressAdapter } from "@bull-board/express";
 
-import fetchReposQueue from "./queues/fetchRepos.js";
+import fetchIssuesQueue from "./queues/fetchIssues.js";
 import reposRouter from "./routers/repos.js";
 import sessionMiddleware from "./middleware/session.js";
 import errorHandler from "./middleware/errors/handler.js";
@@ -28,7 +28,7 @@ app.use(passport.session());
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath("/admin/queues");
 createBullBoard({
-  queues: [new BullMQAdapter(fetchReposQueue)],
+  queues: [new BullMQAdapter(fetchIssuesQueue)],
   serverAdapter: serverAdapter,
 });
 

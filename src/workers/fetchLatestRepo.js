@@ -1,6 +1,6 @@
 import { Worker } from "bullmq";
 import mongoose from "mongoose";
-import fetchLatestRepo from "../utils/fetchLatestRepo.js";
+import fetchLatestIssue from "../utils/fetchLatestIssue.js";
 import connection from "../config/redis.js";
 import User from "../models/user.js";
 import { NotFoundError } from "../middleware/errors/custom.js";
@@ -13,9 +13,14 @@ const worker = new Worker(
     console.log("job.data: ", job.data);
     const [result] = await User.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(id) } },
-      { $unwind: "$repoUsernames" },
-      { $sort: { "repoUsernames.addedAt": -1 } },
-      { $group: { _id: "$_id", repoUsernames: { $push: "$repoUsernames" } } },
+      { $unwind: "$usernamesAndRepo" },
+      { $sort: { "usernamesAndRepo.addedAt": -1 } },
+      {
+        $group: {
+          _id: "$_id",
+          usernamesAndRepo: { $push: "$usernamesAndRepo" },
+        },
+      },
     ]);
     if (!result) {
       const exists = await User.exists({ _id: id });
@@ -26,9 +31,10 @@ const worker = new Worker(
     }
     try {
       const values = await Promise.all(
-        result.repoUsernames.map(async (u) => ({
+        result.usernamesAndRepo.map(async (u) => ({
           username: u.username,
-          data: await fetchLatestRepo(u.username),
+          repo: u.repo,
+          data: await fetchLatestIssue(u.username, u.repo),
         })),
       );
       console.log("values: ", values);
