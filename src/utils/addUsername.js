@@ -4,9 +4,9 @@ import Result from "../models/result.js";
 import User from "../models/user.js";
 import { NotFoundError } from "../middleware/errors/custom.js";
 
-const addUsername = async (id, username) => {
+const addUsername = async (id, username, repo) => {
   const response = await fetchLatestIssue(username, repo);
-  if (!response) throw new NotFoundError(`${username} repos`);
+  if (!response) throw new NotFoundError(`${username}-${repo}`);
 
   const pureIssues = response.filter((issues) => !issues.pull_request);
   const latestIssue = pureIssues[0];

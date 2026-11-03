@@ -1,13 +1,13 @@
 import express from "express";
 const router = express.Router();
-import getRepos from "../controller/getRepos.js";
-import fetchLatestRepo from "../controller/fetchLatestRepo.js";
+import getIssues from "../controller/getIssues.js";
+import fetchLatestIssue from "../controller/fetchLatestIssue.js";
 import { addUsernameGet, addUsername } from "../controller/addUsername.js";
 import { isAuthenticated } from "../middleware/basicAuth.js";
 
-router.get("/", isAuthenticated, getRepos);
+router.get("/", isAuthenticated, getIssues);
 router.get("/username", isAuthenticated, addUsernameGet);
 router.post("/username", isAuthenticated, addUsername);
-router.post("/repo", isAuthenticated, fetchLatestRepo);
+router.post("/issue", isAuthenticated, fetchLatestIssue);
 
 export default router;
