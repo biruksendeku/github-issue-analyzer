@@ -4,7 +4,7 @@ import Result from "../models/result.js";
 import User from "../models/user.js";
 import { NotFoundError } from "../middleware/errors/custom.js";
 
-const addUsername = async (id, username, repo) => {
+const addRepo = async (id, username, repo) => {
   const response = await fetchLatestIssue(username, repo);
   if (!response) throw new NotFoundError(`${username}-${repo}`);
 
@@ -37,4 +37,4 @@ const addUsername = async (id, username, repo) => {
   }
 };
 
-export default addUsername;
+export default addRepo;

@@ -1,13 +1,14 @@
-import addUsernameData from "../utils/addUsername.js";
+import addRepoData from "../utils/addRepo.js";
 
-const addUsernameGet = (req, res) => {
-  res.render("addUsername");
+const addRepoGet = (req, res) => {
+  res.render("addRepo");
 };
 const addUsername = async (req, res) => {
-  const { username } = req.body;
-  const { newResult, updatedUser } = await addUsernameData(
+  const { username, repo } = req.body;
+  const { newResult, updatedUser } = await addRepoData(
     req.user._id,
     username,
+    repo,
   );
   res.status(201).json({
     newResult,
@@ -15,4 +16,4 @@ const addUsername = async (req, res) => {
   });
 };
 
-export { addUsernameGet, addUsername };
+export { addRepoGet, addRepo };

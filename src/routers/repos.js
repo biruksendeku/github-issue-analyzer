@@ -6,8 +6,8 @@ import { addUsernameGet, addUsername } from "../controller/addUsername.js";
 import { isAuthenticated } from "../middleware/basicAuth.js";
 
 router.get("/", isAuthenticated, getIssues);
-router.get("/username", isAuthenticated, addUsernameGet);
-router.post("/username", isAuthenticated, addUsername);
+router.get("/repo", isAuthenticated, addUsernameGet);
+router.post("/repo", isAuthenticated, addUsername);
 router.post("/issue", isAuthenticated, fetchLatestIssue);
 
 export default router;
