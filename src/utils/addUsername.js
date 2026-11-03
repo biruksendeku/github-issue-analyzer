@@ -24,11 +24,11 @@ const addUsername = async (id, username) => {
 
       updatedUser = await User.findByIdAndUpdate(
         id,
-        { $addToSet: { repoUsernames: { username } } },
+        { $addToSet: { usernamesAndRepo: { username, repo } } },
         { new: true, runValidators: true, session },
       );
 
-      if (!updatedUser) throw new NotFoundError(`User ${id}`); // abort tx
+      if (!updatedUser) throw new NotFoundError("User"); // abort tx
     });
 
     return { newResult, updatedUser };

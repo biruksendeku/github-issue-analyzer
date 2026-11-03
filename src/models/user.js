@@ -3,9 +3,10 @@ import mongoose, { Schema } from "mongoose";
 const userSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
-    repoUsernames: [
+    usernamesAndRepo: [
       {
         username: { type: String, trim: true, lowercase: true },
+        repo: { type: String, trim: true, lowercase: true },
         addedAt: { type: Date, default: Date.now },
         _id: false,
       },
