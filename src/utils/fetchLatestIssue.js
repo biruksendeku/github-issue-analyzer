@@ -19,9 +19,7 @@ const fetchLatestIssue = async (username, repo) => {
     throw new Error(`GitHUb API error: ${res.status} ${res.statusText}`);
   }
   const response = await res.json();
-  const pureIssues = response.filter((issues) => !issues.pull_request);
-  const latestIssue = pureIssues[0];
-  return latestIssue;
+  return response;
 };
 
 export default fetchLatestIssue;

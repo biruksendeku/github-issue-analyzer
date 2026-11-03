@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
-import fetchLatestRepo from "./fetchLatestRepo.js";
+import fetchLatestIssue from "./fetchLatestIssue.js";
 import Result from "../models/result.js";
 import User from "../models/user.js";
 import { NotFoundError } from "../middleware/errors/custom.js";
 
 const addUsername = async (id, username) => {
-  const latestRepo = await fetchLatestRepo(username);
-  if (!latestRepo) throw new NotFoundError(`${username} repos`);
+  const response = await fetchLatestIssue(username, repo);
+  if (!response) throw new NotFoundError(`${username} repos`);
+
+  const pureIssues = response.filter((issues) => !issues.pull_request);
+  const latestIssue = pureIssues[0];
+  console.log("latestIssue: ", latestIssue);
 
   const session = await mongoose.startSession();
   try {
@@ -14,7 +18,7 @@ const addUsername = async (id, username) => {
 
     await session.withTransaction(async () => {
       [newResult] = await Result.create(
-        [{ user: id, latestRepo: latestRepo.full_name }],
+        [{ user: id, latestIssue: latestIssue.full_name }],
         { session },
       );
 
