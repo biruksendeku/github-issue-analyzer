@@ -57,8 +57,15 @@ app.use("/admin/queues", serverAdapter.getRouter());
 
 // 404 handler middleware
 app.use((req, res) => {
-  if (req.accepts("html")) {
-    return res.status(404).render("errors/404");
+  if (req.accepts(["html", "json"]) === "html" && !req.is("json")) {
+    return res.status(404).render("errors/error", {
+      statusCode: 404,
+      title: "Page not found",
+      message: "We couldn’t find the page you were looking for.",
+      guidance:
+        "Check the address, or head back to your issue dashboard and choose a repository from there.",
+      isAuthenticated: req.isAuthenticated?.() ?? false,
+    });
   }
   res.status(404).json({
     success: false,
