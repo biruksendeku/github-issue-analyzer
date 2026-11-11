@@ -22,4 +22,24 @@ const fetchLatestIssue = async (username, repo) => {
   return response;
 };
 
+export const getLatestOpenIssue = (issues) =>
+  issues
+    .filter((issue) => !issue.pull_request)
+    .sort(
+      (left, right) =>
+        new Date(right.created_at).getTime() -
+        new Date(left.created_at).getTime(),
+    )[0] ?? null;
+
+export const createIssueSnapshot = (issue) =>
+  issue
+    ? {
+        id: issue.id,
+        number: issue.number,
+        title: issue.title,
+        htmlUrl: issue.html_url,
+        createdAt: new Date(issue.created_at),
+      }
+    : null;
+
 export default fetchLatestIssue;
