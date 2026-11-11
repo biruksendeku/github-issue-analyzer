@@ -1,18 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Repo Issue Result</title>
-  </head>
-  <body>
-    <h1>Repo Issue Result For <%= username %>/<%= repo %></h1>
-    <% if (latestIssue) { %>
-      <p>
-        <a href="<%= latestIssue.html_url %>"><%= latestIssue.name %></a>
+<%- include("partials/head", {
+  pageTitle: `${username}/${repo} issues`
+}) %>
+<body>
+  <%- include("partials/header", {
+    isAuthenticated: true,
+    showLoginLink: false,
+    showSignupLink: false
+  }) %>
+
+  <main>
+    <section class="page-heading">
+      <p class="eyebrow">Latest issue</p>
+      <h1><%= username %>/<%= repo %></h1>
+      <p class="subheading">
+        Here’s the most recently opened issue we found in this repository.
       </p>
-    <% } else { %>
-      <p>No public repository issues found.</p>
-    <% } %>
-  </body>
+    </section>
+
+    <section class="card">
+      <% if (latestIssue) { %>
+        <article class="issue-card">
+          <span class="issue-label">
+            Open issue<% if (latestIssue.number) { %> #<%= latestIssue.number %><% } %>
+          </span>
+          <h2 class="issue-title"><%= latestIssue.title || "Untitled issue" %></h2>
+          <% if (latestIssue.html_url) { %>
+            <a
+              class="button"
+              href="<%= latestIssue.html_url %>"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View issue on GitHub
+            </a>
+          <% } %>
+        </article>
+      <% } else { %>
+        <div class="empty-state">
+          <strong>No open issues found.</strong><br />
+          This repository doesn’t currently have any public open issues.
+        </div>
+      <% } %>
+      <p class="form-note" style="margin-top: 22px">
+        <a class="inline-link" href="/">Back to your dashboard</a>
+      </p>
+    </section>
+  </main>
+
+  <%- include("partials/footer") %>
+</body>
 </html>

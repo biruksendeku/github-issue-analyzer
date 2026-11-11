@@ -1,4 +1,54 @@
-<form action="/repo" method="post">
-  <input type="text" name="username" placeholder="Enter GitHub username" />
-  <button type="submit">Find Latest Issues</button>
-</form>
+<%- include("partials/head", { pageTitle: "Dashboard" }) %>
+<body>
+  <%- include("partials/header", {
+    isAuthenticated: true,
+    showLoginLink: false,
+    showSignupLink: false
+  }) %>
+
+  <main>
+    <section class="page-heading">
+      <p class="eyebrow">Your issue workspace</p>
+      <h1>Keep an eye on the issues that matter.</h1>
+      <p class="subheading">
+        Track a GitHub repository and we’ll keep checking its latest open issues
+        for you.
+      </p>
+    </section>
+
+    <section class="card">
+      <form class="form" action="/repo" method="post">
+        <div class="field">
+          <label for="username">GitHub owner or organization</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="e.g. facebook"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="repo">Repository name</label>
+          <input
+            type="text"
+            id="repo"
+            name="repo"
+            placeholder="e.g. react"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <button class="button" type="submit">Track repository</button>
+        <p class="form-note">
+          We’ll start with the latest five open issues and check for updates
+          regularly.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <%- include("partials/footer") %>
+</body>
+</html>

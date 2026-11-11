@@ -1,5 +1,52 @@
-<form action="/repo" method="post">
-  <input type="text" name="username" placeholder="Enter GitHub Username" />
-  <input type="text" name="repo" placeholder="Enter GitHub Repo" />
-  <button type="submit">Add Repo</button>
-</form>
+<%- include("partials/head", { pageTitle: "Track a repository" }) %>
+<body>
+  <%- include("partials/header", {
+    isAuthenticated: true,
+    showLoginLink: false,
+    showSignupLink: false
+  }) %>
+
+  <main>
+    <section class="page-heading">
+      <p class="eyebrow">Repository monitoring</p>
+      <h1>Add a repository</h1>
+      <p class="subheading">
+        Enter the repository owner and name to start tracking its open issues.
+      </p>
+    </section>
+
+    <section class="card">
+      <form class="form" action="/repo" method="post">
+        <div class="field">
+          <label for="username">GitHub owner or organization</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="e.g. nodejs"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="repo">Repository name</label>
+          <input
+            type="text"
+            id="repo"
+            name="repo"
+            placeholder="e.g. node"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <button class="button" type="submit">Start tracking</button>
+        <a class="text-link" href="/" style="text-align: center">
+          Back to dashboard
+        </a>
+      </form>
+    </section>
+  </main>
+
+  <%- include("partials/footer") %>
+</body>
+</html>

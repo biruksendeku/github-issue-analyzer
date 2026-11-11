@@ -1,0 +1,22 @@
+<header class="topbar">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">⌘</span>
+      <span>GitHub Issue Analyzer</span>
+    </a>
+    <div class="nav-links">
+      <% if (isAuthenticated) { %>
+        <a class="nav-link" href="/">Dashboard</a>
+        <a class="nav-link" href="/repo">Add repository</a>
+        <a class="nav-link" href="/auth/logout">Sign out</a>
+      <% } else { %>
+        <% if (showLoginLink) { %>
+          <a class="nav-link" href="/auth/login">Sign in</a>
+        <% } %>
+        <% if (showSignupLink) { %>
+          <a class="button" href="/auth/signup">Create account</a>
+        <% } %>
+      <% } %>
+    </div>
+  </nav>
+</header>
